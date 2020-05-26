@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.PersonasDetallesController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.PersonasDetallesController">
    <children>
-      <TableView fx:id="tblPersonas" layoutY="1.0" prefHeight="362.0" prefWidth="417.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="tblPersonas" layoutY="35.0" prefHeight="340.0" prefWidth="600.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
         <columns>
           <TableColumn fx:id="clNombre" minWidth="60.0" prefWidth="60.0" text="Nombre" />
           <TableColumn fx:id="clApellido1" minWidth="60.0" prefWidth="60.0" text="Apellido1" />
@@ -21,8 +21,10 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="btnAgregar" layoutX="61.0" layoutY="273.0" mnemonicParsing="false" onAction="#agregarPersona" text="Añadir persona" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="273.0" />
-      <Button fx:id="btnModificar" layoutX="243.0" layoutY="275.0" mnemonicParsing="false" onAction="#modificarPersona" text="Modificar persona" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="243.0" AnchorPane.rightAnchor="243.0" AnchorPane.topAnchor="275.0" />
+      <Button fx:id="btnAgregar" layoutX="61.0" layoutY="273.0" mnemonicParsing="false" onAction="#agregarPersona" text="Añadir persona" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="75.0" />
+      <Button fx:id="btnModificar" layoutX="243.0" layoutY="275.0" mnemonicParsing="false" onAction="#modificarPersona" text="Modificar persona" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="243.0" AnchorPane.rightAnchor="243.0" />
       <Button fx:id="btnEliminar" layoutX="448.0" layoutY="275.0" mnemonicParsing="false" onAction="#eliminarPersona" text="Eliminar persona" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="75.0" />
+      <Label fx:id="lbFiltro" layoutX="41.0" layoutY="14.0" text="Filtrar Nombre:" AnchorPane.topAnchor="7.0" />
+      <TextField fx:id="tfFiltro" layoutX="139.0" layoutY="3.0" onKeyReleased="#filtrar" AnchorPane.topAnchor="5.0" />
    </children>
 </AnchorPane>

@@ -3,8 +3,6 @@ package controlador;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,9 +13,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.Persona;
@@ -37,16 +38,23 @@ public class PersonasDetallesController implements Initializable {
     @FXML
     private TableView<Persona> tblPersonas;
     private ObservableList<Persona> personas;
+    private ObservableList<Persona> filtroPersonas;
     @FXML
     private Button btnAgregar;
     @FXML
     private Button btnModificar;
     @FXML
     private Button btnEliminar;
+    @FXML
+    private Label lbFiltro;
+    @FXML
+    private TextField tfFiltro;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         personas = FXCollections.observableArrayList();
+        filtroPersonas = FXCollections.observableArrayList();
+        
         this.tblPersonas.setItems(personas);
         
         this.clNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
@@ -74,6 +82,9 @@ public class PersonasDetallesController implements Initializable {
                 Persona p = controlador.getPersona();
                 if (p != null) {
                     this.personas.add(p);
+                    if (p.getNombre().contains(this.tfFiltro.getText().toLowerCase())) {
+                        this.filtroPersonas.add(p);
+                    }
                     this.tblPersonas.refresh();
                 }
             } catch (IOException ex) {
@@ -111,6 +122,9 @@ public class PersonasDetallesController implements Initializable {
                 
                 Persona aux = controlador.getPersona();
                 if (aux != null) {
+                    if (!aux.getNombre().contains(this.tfFiltro.getText().toLowerCase())) {
+                        this.filtroPersonas.remove(aux);
+                    }
                     this.tblPersonas.refresh();
                 }
             } catch (IOException ex) {
@@ -135,12 +149,30 @@ public class PersonasDetallesController implements Initializable {
             alert.showAndWait();
         } else {
             this.personas.remove(p);
+            this.filtroPersonas.remove(p);
             this.tblPersonas.refresh();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setTitle("Info");
             alert.setContentText("Persona borrada");
             alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void filtrar(KeyEvent event) {
+        String filtroNombre = this.tfFiltro.getText();
+        if (filtroNombre.isEmpty()) {
+            this.tblPersonas.setItems(personas);
+        } else {
+            this.filtroPersonas.clear();
+            
+            for (Persona persona : this.personas) {
+                if (persona.getNombre().toLowerCase().contains(filtroNombre.toLowerCase())) {
+                    this.filtroPersonas.add(persona);
+                }
+            }
+            this.tblPersonas.setItems(filtroPersonas);
         }
     }
     
