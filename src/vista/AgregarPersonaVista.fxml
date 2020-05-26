@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.AgregarPersonaController">
+   <children>
+      <Label fx:id="lbNombre" alignment="CENTER" contentDisplay="CENTER" layoutX="77.0" layoutY="10.0" text="Nombre" AnchorPane.topAnchor="10.0" />
+      <TextField fx:id="tfNombre" layoutX="26.0" layoutY="35.0" />
+      <Label fx:id="lbApellido1" layoutX="62.0" layoutY="67.0" text="Primer Apellido" AnchorPane.bottomAnchor="216.0" />
+      <TextField fx:id="tfApellido1" layoutX="26.0" layoutY="91.0" AnchorPane.bottomAnchor="186.0" />
+      <Label fx:id="lbApellido2" layoutX="55.0" layoutY="116.0" text="Segundo Apellido" AnchorPane.topAnchor="118.0" />
+      <TextField fx:id="tfApellido2" layoutX="28.0" layoutY="140.0" AnchorPane.topAnchor="143.0" />
+      <Label fx:id="lbNumero" layoutX="81.0" layoutY="176.0" text="Número" AnchorPane.topAnchor="172.0" />
+      <TextField fx:id="tfNumero" layoutX="26.0" layoutY="189.0" AnchorPane.topAnchor="193.0" />
+      <Label fx:id="lbEmail" layoutX="86.0" layoutY="228.0" text="Email" AnchorPane.topAnchor="225.0" />
+      <TextField fx:id="tfEmail" layoutX="26.0" layoutY="237.0" AnchorPane.topAnchor="245.0" />
+      <Button fx:id="btnAgregarPersona" layoutX="51.0" layoutY="274.0" mnemonicParsing="false" onAction="#agregarPersona" text="Agregar Persona" AnchorPane.bottomAnchor="2.0" />
+   </children>
+</AnchorPane>
