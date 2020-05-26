@@ -50,6 +50,16 @@ public class AgregarPersonaController implements Initializable {
         this.personas = personas;
     }
     
+    public void initAttributes (ObservableList<Persona> personas, Persona p) {
+        this.personas = personas;
+        this.persona = p;
+        this.tfNombre.setText(p.getNombre());
+        this.tfApellido1.setText(p.getApellido1());
+        this.tfApellido2.setText(p.getApellido2());
+        this.tfNumero.setText(p.getNumero()+"");
+        this.tfEmail.setText(p.getEmail());
+    }
+    
     @FXML
     private void agregarPersona(ActionEvent event) {
         String nombre = this.tfNombre.getText();
@@ -61,12 +71,27 @@ public class AgregarPersonaController implements Initializable {
         Persona p = new Persona(nombre, apellido1, apellido2, numero, email);
         
         if (!this.personas.contains(p)) {
-            this.persona = p;
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setTitle("Info");
-            alert.setContentText("Person añadida.");
-            alert.showAndWait();
+            // Modificar
+            if (this.persona != null) {
+                this.persona.setNombre(nombre);
+                this.persona.setApellido1(apellido1);
+                this.persona.setApellido2(apellido2);
+                this.persona.setNumero(numero);
+                this.persona.setEmail(email);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setTitle("Info");
+                alert.setContentText("Persona Modificada");
+                alert.showAndWait();
+            } else {
+            // Agregando
+                this.persona = p;
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setTitle("Info");
+                alert.setContentText("Person añadida.");
+                alert.showAndWait();
+            }
             
             Stage stage = (Stage) this.btnAgregarPersona.getScene().getWindow();
             stage.close();

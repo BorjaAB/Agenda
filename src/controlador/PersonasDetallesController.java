@@ -77,7 +77,11 @@ public class PersonasDetallesController implements Initializable {
                     this.tblPersonas.refresh();
                 }
             } catch (IOException ex) {
-                Logger.getLogger(PersonasDetallesController.class.getName()).log(Level.SEVERE, null, ex);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error");
+                alert.setContentText(ex.getMessage());
+                alert.showAndWait();
             }
     }
 
@@ -92,7 +96,30 @@ public class PersonasDetallesController implements Initializable {
             alert.setContentText("Selecciona una persona");
             alert.showAndWait();
         } else {
-            
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/AgregarPersonaVista.fxml"));
+                Parent root = loader.load();
+                
+                AgregarPersonaController controlador = loader.getController();
+                controlador.initAttributes(personas, p);
+                
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+                
+                Persona aux = controlador.getPersona();
+                if (aux != null) {
+                    this.tblPersonas.refresh();
+                }
+            } catch (IOException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error");
+                alert.setContentText(ex.getMessage());
+                alert.showAndWait();
+            }
         }
     }
 
