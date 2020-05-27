@@ -1,6 +1,12 @@
 package modelo;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Persona {
     private String nombre;
@@ -9,6 +15,9 @@ public class Persona {
     private int numero;
     private String email;
 
+    public Persona() {
+    }
+    
     public Persona(String nombre, String apellido1, String apellido2, int numero, String email) {
         this.nombre = nombre;
         this.apellido1 = apellido1;
@@ -58,12 +67,6 @@ public class Persona {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 3;
-        return hash;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -85,6 +88,35 @@ public class Persona {
             return false;
         }
         return true;
+    }
+    
+    public ObservableList<Persona> getPersonas(){
+        
+        ObservableList<Persona> obs = FXCollections.observableArrayList();
+        try {
+        Conexion conexion = new Conexion();
+        Connection con = conexion.getConexion();
+        
+        Statement s = null;
+            
+        s = con.createStatement();
+        ResultSet rs = s.executeQuery("SELECT * FROM CONTACTOS");
+        
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String apellido1 = rs.getString("apellido1");
+                String apellido2 = rs.getString("apellido2");
+                int numero = rs.getInt("numero");
+                String email = rs.getString("email");
+
+                Persona p = new Persona(nombre, apellido1, apellido2, numero, email);
+                obs.add(p);
+            }
+        conexion.cerrarConexion(con);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return obs;
     }
     
 }

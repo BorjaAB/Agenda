@@ -26,15 +26,15 @@ import modelo.Persona;
 public class PersonasDetallesController implements Initializable {
 
     @FXML
-    private TableColumn clNombre;
+    private TableColumn<Persona, String>clNombre;
     @FXML
-    private TableColumn clApellido1;
+    private TableColumn<Persona, String> clApellido1;
     @FXML
-    private TableColumn clApellido2;
+    private TableColumn<Persona, String> clApellido2;
     @FXML
-    private TableColumn clNumero;
+    private TableColumn<Persona, Integer> clNumero;
     @FXML
-    private TableColumn clEmail;
+    private TableColumn<Persona, String> clEmail;
     @FXML
     private TableView<Persona> tblPersonas;
     private ObservableList<Persona> personas;
@@ -62,6 +62,11 @@ public class PersonasDetallesController implements Initializable {
         this.clApellido2.setCellValueFactory(new PropertyValueFactory("apellido2"));
         this.clNumero.setCellValueFactory(new PropertyValueFactory("numero"));
         this.clEmail.setCellValueFactory(new PropertyValueFactory("email"));
+        
+        Persona p = new Persona();
+        ObservableList<Persona> items = p.getPersonas();
+        this.tblPersonas.setItems(items);
+        
     }    
 
     @FXML
