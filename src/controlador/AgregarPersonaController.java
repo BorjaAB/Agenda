@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -70,39 +69,10 @@ public class AgregarPersonaController implements Initializable {
         
         Persona p = new Persona(nombre, apellido1, apellido2, numero, email);
         
-        if (!this.personas.contains(p)) {
-            // Modificar
-            if (this.persona != null) {
-                this.persona.setNombre(nombre);
-                this.persona.setApellido1(apellido1);
-                this.persona.setApellido2(apellido2);
-                this.persona.setNumero(numero);
-                this.persona.setEmail(email);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText(null);
-                alert.setTitle("Info");
-                alert.setContentText("Persona Modificada");
-                alert.showAndWait();
-            } else {
-            // Agregando
-                this.persona = p;
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText(null);
-                alert.setTitle("Info");
-                alert.setContentText("Person añadida.");
-                alert.showAndWait();
-            }
-            
-            Stage stage = (Stage) this.btnAgregarPersona.getScene().getWindow();
-            stage.close();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("La persona ya existe.");
-            alert.showAndWait();
-        }
+        p.anadirPersona(p);
         
+        Stage stage = (Stage) this.btnAgregarPersona.getScene().getWindow();
+        stage.close();
     }
 
     public Persona getPersona() {

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,7 +15,7 @@ public class Persona {
     private String apellido2;
     private int numero;
     private String email;
-
+    
     public Persona() {
     }
     
@@ -117,6 +118,49 @@ public class Persona {
             System.out.println(ex.getMessage());
         }
         return obs;
+    }
+    
+    public void anadirPersona(Persona p) {
+        try {
+            Conexion conexion = new Conexion();
+            Connection con = conexion.getConexion();
+
+            PreparedStatement s = null;
+
+            s = con.prepareStatement("INSERT INTO CONTACTOS VALUES (?,?,?,?,?)");
+
+            s.setString(1,p.getNombre());
+            s.setString(2,p.getApellido1());
+            s.setString(3,p.getApellido2());
+            s.setInt(4,p.getNumero());
+            s.setString(5,p.getEmail());
+            s.executeUpdate();
+
+            conexion.cerrarConexion(con);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void borrarPersona(String nombre) {
+        try {
+            Conexion conexion = new Conexion();
+            Connection con = conexion.getConexion();
+
+            PreparedStatement s = null;
+
+            s = con.prepareStatement("DELETE FROM contactos WHERE nombre = '?'");
+
+            s.setString(1,nombre);
+            s.executeUpdate();
+            conexion.cerrarConexion(con);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void modificarPersona(Persona p) {
+        
     }
     
 }
