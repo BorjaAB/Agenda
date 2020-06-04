@@ -25,11 +25,17 @@ import modelo.Persona;
 
 public class PersonasDetallesController implements Initializable {
 
+    @FXML
     private TableColumn<Persona, String>clNombre;
+    @FXML
     private TableColumn<Persona, String> clApellido1;
+    @FXML
     private TableColumn<Persona, String> clApellido2;
+    @FXML
     private TableColumn<Persona, Integer> clNumero;
+    @FXML
     private TableColumn<Persona, String> clEmail;
+    @FXML
     private TableView<Persona> tblPersonas;
     private ObservableList<Persona> personas;
     private ObservableList<Persona> filtroPersonas;
@@ -62,36 +68,40 @@ public class PersonasDetallesController implements Initializable {
         ObservableList<Persona> items = p.getPersonas();
         this.tblPersonas.setItems(items);
     }
-    
+
+    @FXML
     private void agregarPersona(ActionEvent event){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/AgregarPersonaVista.fxml"));
-            Parent root = loader.load();
-            
-            AgregarPersonaController controlador = loader.getController();
-            controlador.initAttributes(personas);
-            
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-            stage.showAndWait();
-            
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setTitle("Info");
-            alert.setContentText("Persona añadida");
-            alert.showAndWait();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/AgregarPersonaVista.fxml"));
+                Parent root = loader.load();
+                
+                AgregarPersonaController controlador = loader.getController();
+                controlador.initAttributes(personas);
+                
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+                
+                Persona p = controlador.getPersona();
+                if (p != null) {
+                    this.personas.add(p);
+                    if (p.getNombre().contains(this.tfFiltro.getText().toLowerCase())) {
+                        this.filtroPersonas.add(p);
+                    }
+                    this.tblPersonas.refresh();
+                }
+            } catch (IOException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error");
+                alert.setContentText(ex.getMessage());
+                alert.showAndWait();
+            }
             Persona p = new Persona();
             ObservableList<Persona> items = p.getPersonas();
             this.tblPersonas.setItems(items);
-        } catch (IOException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText(ex.getMessage());
-            alert.showAndWait();
-        }
     }
 
     @FXML
@@ -135,6 +145,7 @@ public class PersonasDetallesController implements Initializable {
         }
     }
 
+    @FXML
     private void eliminarPersona(ActionEvent event) {
         Persona p = this.tblPersonas.getSelectionModel().getSelectedItem();
         
@@ -149,9 +160,9 @@ public class PersonasDetallesController implements Initializable {
         }
     }
 
+    @FXML
     private void filtrar(KeyEvent event) {
         String filtroNombre = this.tfFiltro.getText();
-        
         if (filtroNombre.isEmpty()) {
             this.tblPersonas.setItems(personas);
         } else {
