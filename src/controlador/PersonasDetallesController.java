@@ -115,7 +115,7 @@ public class PersonasDetallesController implements Initializable {
             alert.showAndWait();
         } else {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/AgregarPersonaVista.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/ModificarPersonaVista.fxml"));
                 Parent root = loader.load();
                 
                 AgregarPersonaController controlador = loader.getController();
