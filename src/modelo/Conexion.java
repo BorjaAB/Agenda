@@ -3,6 +3,7 @@ package modelo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javafx.scene.control.Alert;
 
 public class Conexion {
     
@@ -13,9 +14,17 @@ public class Conexion {
             String url = "jdbc:oracle:thin:borja/borja@localhost:1521:XE";
             con = DriverManager.getConnection(url);
         } catch (ClassNotFoundException e) {
-            System.out.println("Error Clase no encontrada.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("JDBC No importado en el proyecto");
+            alert.showAndWait();
         } catch (SQLException e) {
-            System.out.println("Exeption SQL " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Base de datos no encontrada.");
+            alert.showAndWait();
         }
         return con;
     }
@@ -23,9 +32,17 @@ public class Conexion {
     public void cerrarConexion (Connection con) {
         try {
             con.close();
-            System.out.println("Conexión cerrada");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("Info");
+            alert.setContentText("Conexión cerrada");
+            alert.showAndWait();
         } catch (SQLException e) {
-            System.out.println("Error SQL");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Error al cerrar conexión");
+            alert.showAndWait();
         }
     }
     

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.Objects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 public class Persona {
     private String nombre;
@@ -115,7 +116,11 @@ public class Persona {
             }
         conexion.cerrarConexion(con);
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("La tabla no existe.");
+            alert.showAndWait();
         }
         return obs;
     }
