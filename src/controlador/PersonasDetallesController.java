@@ -13,11 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.Persona;
@@ -38,19 +40,16 @@ public class PersonasDetallesController implements Initializable {
     private TableView<Persona> tblPersonas;
     private ObservableList<Persona> personas;
     private ObservableList<Persona> filtroPersonas;
+    @FXML
     private TextField tfFiltro;
     @FXML
-    private TextField tfNombreModificar;
+    private Button btnAgregar;
     @FXML
-    private TextField tfApellido1Modificar;
+    private Button btnModificar;
     @FXML
-    private TextField tfApellido2Modificar;
+    private Button btnEliminar;
     @FXML
-    private TextField tfNumeroModificar;
-    @FXML
-    private TextField tfEmailModificar;
-    @FXML
-    private Button btnModificarPersona;
+    private Label lbFiltro;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,37 +69,30 @@ public class PersonasDetallesController implements Initializable {
 
     @FXML
     private void agregarPersona(ActionEvent event){
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/AgregarPersonaVista.fxml"));
-                Parent root = loader.load();
-                
-                AgregarPersonaController controlador = loader.getController();
-                controlador.initAttributes(personas);
-                
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setScene(scene);
-                stage.showAndWait();
-                
-                Persona p = controlador.getPersona();
-                if (p != null) {
-                    this.personas.add(p);
-                    if (p.getNombre().contains(this.tfFiltro.getText().toLowerCase())) {
-                        this.filtroPersonas.add(p);
-                    }
-                    this.tblPersonas.refresh();
-                }
-            } catch (IOException ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setTitle("Error");
-                alert.setContentText(ex.getMessage());
-                alert.showAndWait();
-            }
-            Persona p = new Persona();
-            ObservableList<Persona> items = p.getPersonas();
-            this.tblPersonas.setItems(items);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/AgregarPersonaVista.fxml"));
+            Parent root = loader.load();
+            
+            AgregarPersonaController controlador = loader.getController();
+            controlador.initAttributes(personas);
+            
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+            
+            Persona p = controlador.getPersona();
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
+        }
+        Persona p = new Persona();
+        ObservableList<Persona> items = p.getPersonas();
+        this.tblPersonas.setItems(items);
     }
 
     @FXML
@@ -118,7 +110,7 @@ public class PersonasDetallesController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/ModificarPersonaVista.fxml"));
                 Parent root = loader.load();
                 
-                AgregarPersonaController controlador = loader.getController();
+                ModificarPersonaController controlador = loader.getController();
                 controlador.initAttributes(personas, p);
                 
                 Scene scene = new Scene(root);
@@ -127,13 +119,6 @@ public class PersonasDetallesController implements Initializable {
                 stage.setScene(scene);
                 stage.showAndWait();
                 
-                Persona aux = controlador.getPersona();
-                if (aux != null) {
-                    if (!aux.getNombre().contains(this.tfFiltro.getText().toLowerCase())) {
-                        this.filtroPersonas.remove(aux);
-                    }
-                    this.tblPersonas.refresh();
-                }
             } catch (IOException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
@@ -141,6 +126,9 @@ public class PersonasDetallesController implements Initializable {
                 alert.setContentText(ex.getMessage());
                 alert.showAndWait();
             }
+            Persona aux = new Persona();
+            ObservableList<Persona> items = aux.getPersonas();
+            this.tblPersonas.setItems(items);
         }
     }
 
@@ -176,6 +164,10 @@ public class PersonasDetallesController implements Initializable {
             }
             this.tblPersonas.setItems(filtroPersonas);
         }
+    }
+
+    @FXML
+    private void seleccionar(MouseEvent event) {
     }
     
 }
