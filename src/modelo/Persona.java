@@ -147,25 +147,49 @@ public class Persona {
         }
     }
     
-    public void borrarPersona(String nombre) {
+    public void borrarPersona(Persona p) {
+        try {
+            Conexion conexion = new Conexion();
+            Connection con = conexion.getConexion();
+            
+            PreparedStatement s = null;
+            
+            s = con.prepareStatement("DELETE FROM CONTACTOS WHERE numero = ?");
+            s.setInt(1,p.getNumero());
+            s.executeUpdate();
+
+            conexion.cerrarConexion(con);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Error en el método borrarPersona");
+            alert.showAndWait();
+        }
+    }
+    
+    public void modificarPersona(Persona p) {
         try {
             Conexion conexion = new Conexion();
             Connection con = conexion.getConexion();
 
             PreparedStatement s = null;
 
-            s = con.prepareStatement("DELETE FROM contactos WHERE nombre = '?'");
+            s = con.prepareStatement("UPDATE contactos SET ='Boca' WHERE NOMBRE = 'Federicolopez'");
 
-            s.setString(1,nombre);
-            s.executeUpdate();
+            //s.setString(1,nombre.getNombre());
+            int row = s.executeUpdate();
+
             conexion.cerrarConexion(con);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Error en el método borrarPersona");
+            alert.showAndWait();
         }
-    }
-    
-    public void modificarPersona(Persona p) {
-        
     }
     
 }

@@ -147,7 +147,6 @@ public class PersonasDetallesController implements Initializable {
     @FXML
     private void eliminarPersona(ActionEvent event) {
         Persona p = this.tblPersonas.getSelectionModel().getSelectedItem();
-        
         if (p == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -155,7 +154,10 @@ public class PersonasDetallesController implements Initializable {
             alert.setContentText("Selecciona una persona");
             alert.showAndWait();
         } else {
-            p.borrarPersona(p.getNombre());
+            p.borrarPersona(p);
+            Persona n = new Persona();
+            ObservableList<Persona> items = n.getPersonas();
+            this.tblPersonas.setItems(items);
         }
     }
 
