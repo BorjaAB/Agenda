@@ -175,19 +175,21 @@ public class Persona {
             Connection con = conexion.getConexion();
 
             PreparedStatement s = null;
-
-            s = con.prepareStatement("UPDATE contactos SET ='Boca' WHERE NOMBRE = 'Federicolopez'");
-
-            //s.setString(1,nombre.getNombre());
-            int row = s.executeUpdate();
+            
+            s = con.prepareStatement("UPDATE CONTACTOS SET NOMBRE = ?, APELLIDO1 = ?, APELLIDO2 = ?, EMAIL = ?  WHERE NUMERO = ?");
+            s.setString(1,p.getNombre());
+            s.setString(2,p.getApellido1());
+            s.setString(3,p.getApellido2());
+            s.setString(4,p.getEmail());
+            s.setInt(5,p.getNumero());
+            s.executeUpdate();
 
             conexion.cerrarConexion(con);
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("Error");
-            alert.setContentText("Error en el método borrarPersona");
+            alert.setContentText("Error en el método modificarPersona");
             alert.showAndWait();
         }
     }

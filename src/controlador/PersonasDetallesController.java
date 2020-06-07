@@ -112,7 +112,11 @@ public class PersonasDetallesController implements Initializable {
                 
                 ModificarPersonaController controlador = loader.getController();
                 controlador.initAttributes(personas, p);
-                
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setTitle("Info");
+                alert.setContentText("A las personas no se les puede modificar el número");
+                alert.showAndWait();
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -166,8 +170,5 @@ public class PersonasDetallesController implements Initializable {
         }
     }
 
-    @FXML
-    private void seleccionar(MouseEvent event) {
-    }
     
 }

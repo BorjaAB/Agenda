@@ -52,7 +52,6 @@ public class ModificarPersonaController implements Initializable {
         String email = this.tfEmail.getText();
         
         Persona p = new Persona(nombre, apellido1, apellido2, numero, email);
-        
         p.modificarPersona(p);
         
         Stage stage = (Stage) this.btnModificarPersona.getScene().getWindow();
