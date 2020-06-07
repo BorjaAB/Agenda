@@ -19,7 +19,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.Persona;
@@ -39,7 +38,6 @@ public class PersonasDetallesController implements Initializable {
     @FXML
     private TableView<Persona> tblPersonas;
     private ObservableList<Persona> personas;
-    private ObservableList<Persona> filtroPersonas;
     @FXML
     private TextField tfFiltro;
     @FXML
@@ -54,7 +52,6 @@ public class PersonasDetallesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         personas = FXCollections.observableArrayList();
-        filtroPersonas = FXCollections.observableArrayList();
         
         this.clNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
         this.clApellido1.setCellValueFactory(new PropertyValueFactory("apellido1"));
@@ -156,18 +153,10 @@ public class PersonasDetallesController implements Initializable {
     @FXML
     private void filtrar(KeyEvent event) {
         String filtroNombre = this.tfFiltro.getText();
-        if (filtroNombre.isEmpty()) {
-            this.tblPersonas.setItems(personas);
-        } else {
-            this.filtroPersonas.clear();
-            
-            for (Persona persona : this.personas) {
-                if (persona.getNombre().toLowerCase().contains(filtroNombre.toLowerCase())) {
-                    this.filtroPersonas.add(persona);
-                }
-            }
-            this.tblPersonas.setItems(filtroPersonas);
-        }
+        
+        Persona p = new Persona();
+        ObservableList<Persona> items = p.filtro(filtroNombre);
+        this.tblPersonas.setItems(items);
     }
 
     

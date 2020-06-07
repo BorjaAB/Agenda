@@ -194,4 +194,39 @@ public class Persona {
         }
     }
     
+    public ObservableList<Persona> filtro(String filtro){
+        
+        ObservableList<Persona> obs = FXCollections.observableArrayList();
+        try {
+            Conexion conexion = new Conexion();
+            Connection con = conexion.getConexion();
+
+            PreparedStatement s = null;
+            
+            s = con.prepareStatement("SELECT * FROM CONTACTOS WHERE NOMBRE LIKE ?");
+            s.setString(1, "%"+filtro+"%");
+            ResultSet rs = s.executeQuery();
+            
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String apellido1 = rs.getString("apellido1");
+                String apellido2 = rs.getString("apellido2");
+                int numero = rs.getInt("numero");
+                String email = rs.getString("email");
+
+                Persona p = new Persona(nombre, apellido1, apellido2, numero, email);
+                obs.add(p);
+            }
+            
+            conexion.cerrarConexion(con);
+        } catch (SQLException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Fallo");
+            alert.showAndWait();
+        }
+        return obs;
+    }
+    
 }
